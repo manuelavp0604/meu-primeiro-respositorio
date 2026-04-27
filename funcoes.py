@@ -7,7 +7,7 @@ def rolar_dados(quantidade):
     return lista
 
 
-def guardar_dados(dados_rolados, dados_no_estoque, indice):
+def guardar_dado(dados_rolados, dados_no_estoque, indice):
     lista_nova = []
 
     i = 0
