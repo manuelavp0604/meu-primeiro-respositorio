@@ -33,3 +33,18 @@ def remover_dado(dados_rolados, dados_no_estoque, indice):
     novos_rolados = dados_rolados + [dado_removido]
 
     return [novos_rolados, novo_estoque]     
+
+def calcula_pontos_regra_simples(lista_dados):
+    pontos = {}
+
+    for face in range(1,7):
+        soma = 0
+        i = 0
+        while i < len(lista_dados):
+            if lista_dados[i] == face:
+                soma += face
+            i+=1
+        pontos[face] = soma
+    return pontos
+
+
