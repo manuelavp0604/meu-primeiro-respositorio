@@ -88,8 +88,8 @@ def calcula_pontos_full_house(lista5):
      numero2 = 0
 
     for num in lista5:
-         if num != numero1:
-             numero2 = num
+        if num != numero1:
+            numero2 = num
 
     for num in lista5:
         soma += num
@@ -98,7 +98,7 @@ def calcula_pontos_full_house(lista5):
         elif num == numero2:
             contador2 += 1
             
-        if (contador1 == 3 and contador2 == 2) or (contador1 == 2 and contador2 == 3):
-         return soma 
+    if (contador1 == 3 and contador2 == 2) or (contador1 == 2 and contador2 == 3):
+        return soma 
 
     return 0 
