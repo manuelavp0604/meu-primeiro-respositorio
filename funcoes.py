@@ -102,3 +102,13 @@ def calcula_pontos_full_house(lista5):
         return soma 
 
     return 0 
+
+def calcula_pontos_quadra(lista):
+    for i in range(len(lista)):
+        quantidade=1
+        for j in range(i+1,len(lista)):
+            if lista[i]==lista[j]:
+                quantidade+=1
+        if quantidade==4:
+            return calcula_pontos_soma(lista)
+    return 0
