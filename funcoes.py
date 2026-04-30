@@ -58,7 +58,7 @@ def calcula_pontos_sequencia_baixa(lista_inteiros):
     contador = 0
 
     for num in range (1,7): 
-        if num in lista_inteiro:
+        if num in lista_inteiros:
             contador += 1
             if contador == 4:
                 return 15
