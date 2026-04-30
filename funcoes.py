@@ -114,15 +114,13 @@ def calcula_pontos_quadra(lista):
     return 0
 
 def calcula_pontos_quina(lista):
-    quantidade = 0
+    for i in range(len(lista)):
+        qnt = 0
+        for j in range(len(lista)):
+            if lista[i] == lista[j]:
+                qnt += 1
 
-    for i in range(len(lista) - 1):
-        if lista[i] == lista[i+1]:
-            quantidade += 1
-        else:
-            quantidade = 0
-
-    if quantidade > 4: #será q é isso??
-        return 50
+        if qnt >= 5:
+            return 50
 
     return 0
