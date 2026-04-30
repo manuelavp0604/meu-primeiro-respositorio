@@ -112,3 +112,12 @@ def calcula_pontos_quadra(lista):
         if quantidade==4:
             return calcula_pontos_soma(lista)
     return 0
+
+def calcula_pontos_quina(lista):
+    qnt=0
+    for i in range((len(lista))-1):
+        if lista[i]==lista[i+1]:
+            qnt+=1
+    if qnt >=4:
+        return 50
+    return 0
