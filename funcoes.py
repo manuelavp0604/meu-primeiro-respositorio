@@ -86,8 +86,8 @@ def calcula_pontos_full_house(lista5):
 
      numero1 = lista5[0]
      numero2 = 0
-
-    for num in lista5:
+     
+     for num in lista5:
         if num != numero1:
             numero2 = num
 
