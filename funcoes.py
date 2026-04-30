@@ -49,7 +49,7 @@ def calcula_pontos_regra_simples(lista_dados):
 
 def calcula_pontos_soma(lista):
     soma = 0 
-    for i in range (len(lista)):
+    for i in lista:
         soma += i
     return soma 
 
