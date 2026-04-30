@@ -69,10 +69,11 @@ def calcula_pontos_sequencia_baixa(lista_inteiros):
 
 def calcula_pontos_sequencia_alta(lista_num_inteiros):
     contador = 0
-    for num in lista_inteiros:
-        if num + 1 in lista_inteiros:
+    for num in range (1,7):
+        if num in lista_inteiros:
             contador += 1
-
-    if contador >= 5:
-        return 30
+            if contador == 5:
+                return 30
+        else:
+            contador = 0
     return 0
