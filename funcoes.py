@@ -122,7 +122,7 @@ def calcula_pontos_quina(lista):
         else:
             quantidade = 0
 
-    if quantidade >= 4:
+    if quantidade > 4: #será q é isso??
         return 50
 
     return 0
