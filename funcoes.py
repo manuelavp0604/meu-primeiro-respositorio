@@ -141,9 +141,11 @@ def faz_jogada(dados, categoria, cartela):
     pontos_simples = calcula_pontos_regra_simples(dados)
     pontos_avancada = calcula_pontos_regra_avancada(dados)
 
-    if categoria in pontos_simples:
+    if categoria in cartela['regra_simples']:
         cartela['regra_simples'][categoria] = pontos_simples[categoria]
     else:
-        cartela['regra_avancada'][categoria] = calcula_pontos_soma(dados)
+        cartela['regra_avancada'][categoria] = pontos_avancada[categoria]
+
+    cartela['regra_avancada']['sem_combinacao'] = calcula_pontos_soma(dados)
 
     return cartela
