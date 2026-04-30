@@ -80,17 +80,17 @@ def calcula_pontos_sequencia_alta(lista_num_inteiros):
 
 
 def calcula_pontos_full_house(lista5):
-     contador1 = 0 
-     contador2 = 0
-     soma = 0
+    contador1 = 0 
+    contador2 = 0
+    soma = 0
 
-     numero1 = lista5[0]
-     numero2 = 0
+    numero1 = lista5[0]
+    numero2 = 0
      
-     for num in lista5:
+    for num in lista5:
         if num != numero1:
             numero2 = num
-
+             
     for num in lista5:
         soma += num
         if num == numero1: 
