@@ -126,7 +126,7 @@ def calcula_pontos_quina(lista):
     return 0
 
 def calcula_pontos_regra_avancada(lista):
-    resultados = {} #mari fiz um monte de coisa errada pra nada kkkkk
+    resultados = {}
 
     resultados['cinco_iguais'] = calcula_pontos_quina(lista)
     resultados['full_house'] = calcula_pontos_full_house(lista)
@@ -136,3 +136,14 @@ def calcula_pontos_regra_avancada(lista):
     resultados['sequencia_baixa'] = calcula_pontos_sequencia_baixa(lista)
 
     return resultados
+
+def faz_jogada(dados, categoria, cartela):
+    simples = calcula_pontos_regra_simples(dados)
+    avancada = calcula_pontos_regra_avancada(dados)
+
+    if categoria in simples:
+        cartela[categoria] = simples[categoria]
+    elif categoria in avancada:
+        cartela[categoria] = avancada[categoria]
+
+    return cartela
