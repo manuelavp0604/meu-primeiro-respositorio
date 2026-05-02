@@ -18,7 +18,7 @@ for rodada in range(12):
     while not terminou:
         opcao=input()
 
-         if opcao == '1':
+        if opcao == '1':
             print('Digite o índice do dado a ser guardado (0 a 4):')
             i = int(input())
             if 0 <= i < len(dados):
