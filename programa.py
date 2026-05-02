@@ -171,17 +171,7 @@ def imprime_cartela(cartela):
 
 from funcoes import *
 
-cartela = {
-    'regra_simples': {i: -1 for i in range(1, 7)},
-    'regra_avancada': {
-        'sem_combinacao': -1,
-        'quadra': -1,
-        'full_house': -1,
-        'sequencia_baixa': -1,
-        'sequencia_alta': -1,
-        'cinco_iguais': -1,
-    }
-}      
+cartela = {'regra_simples': {1: -1, 2: -1, 3: -1, 4: -1, 5: -1, 6: -1}, 'regra_avancada': {'sem_combinacao': -1, 'quadra': -1, 'full_house': -1, 'sequencia_baixa': -1, 'sequencia_alta': -1, 'cinco_iguais': -1}}   
 combinacoes=['1','2','3','4','5','6','cinco_iguais','full_house','quadra','sem_combinacao','sequencia_alta','sequencia_baixa']
 
 imprime_cartela(cartela)
@@ -194,7 +184,7 @@ for rodada in range(12):
 
     print("Dados rolados:",dados)
     print("Dados guardados:",guardados)
-    print("Digite 1 para guardar um dado, 2 para remover um dado, 3 para rerrolar, 4 para ver a cartela ou 0 para marcar a pontuação.")
+    print("Digite 1 para guardar um dado, 2 para remover um dado, 3 para rerrolar, 4 para ver a cartela ou 0 para marcar a pontuação:")
 
     while not terminou:
         opcao=input()
@@ -210,7 +200,7 @@ for rodada in range(12):
 
         elif opcao =="3":
             if rerrolagem>=2:
-                print ("Você já usou todas as suas rerrolagens.")
+                print("Você já usou todas as rerrolagens.")
             else:
                 dados=rolar_dados(len(dados))
                 rerrolagem+=1
@@ -219,7 +209,7 @@ for rodada in range(12):
             imprime_cartela(cartela)
 
         elif opcao=='0':
-            print("Digite a combinação desejada.")
+            print("Digite a combinação desejada:")
             while True:
                 comb = input()
 
