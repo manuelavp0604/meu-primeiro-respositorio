@@ -167,98 +167,145 @@ def imprime_cartela(cartela):
         else:
             print(f"| {i}: {filler}|    |")
     print("-"*25)
-    
+
 ##a partir daqui é o nosso codigo
 cartela = {'regra_simples': { 1: -1, 2: -1, 3: -1, 4: -1, 5: -1, 6: -1},'regra_avancada': {'sem_combinacao': -1,'quadra': -1,'full_house': -1,'sequencia_baixa': -1,'sequencia_alta': -1,'cinco_iguais': -1}}
+def eh_numero_valido(texto):
+    if texto == "":
+        return False
+    for letra in texto:
+        if letra < "0" or letra > "9":
+            return False
+    return True
 
-imprime_cartela(cartela)
 
-rodada = 0
+def criar_cartela_vazia():
+    simples = {1: -1, 2: -1, 3: -1, 4: -1, 5: -1, 6: -1}
+    avancada = {"sem_combinacao": -1, "quadra": -1, "full_house": -1, "sequencia_baixa": -1, "sequencia_alta": -1, "cinco_iguais": -1}
+    return {"regra_simples": simples, "regra_avancada": avancada}
 
-while rodada < 12:
-    dados_rolados = rolar_dados(5)
-    dados_guardados = []
-    rerrolagens = 0
-    marcou = False
 
-    while not marcou:
-        print(f"Dados rolados: {dados_rolados}")
-        print(f"Dados guardados: {dados_guardados}")
-        print("Digite 1 para guardar um dado, 2 para remover um dado, 3 para rerrolar, 4 para ver a cartela ou 0 para marcar a pontuação:")
-        opcao = input()
+def combinacao_existe_na_cartela(cartela, escolha):
+    if eh_numero_valido(escolha):
+        numero = int(escolha)
+        if numero in cartela["regra_simples"]:
+            return True
+        return False
+    if escolha in cartela["regra_avancada"]:
+        return True
+    return False
 
-        if opcao == "1":
-            print("Digite o índice do dado a ser guardado (0 a 4):")
-            indice = int(input())
-            resultado = guardar_dado(dados_rolados, dados_guardados, indice)
-            dados_rolados = resultado[0]
-            dados_guardados = resultado[1]
 
-        elif opcao == "2":
-            print("Digite o índice do dado a ser removido (0 a 4):")
-            indice = int(input())
-            resultado = remover_dado(dados_rolados, dados_guardados, indice)
-            dados_rolados = resultado[0]
-            dados_guardados = resultado[1]
+def combinacao_foi_usada(cartela, escolha):
+    if eh_numero_valido(escolha):
+        numero = int(escolha)
+        if numero in cartela["regra_simples"]:
+            return cartela["regra_simples"][numero] != -1
+        return False
+    if escolha in cartela["regra_avancada"]:
+        return cartela["regra_avancada"][escolha] != -1
+    return False
 
-        elif opcao == "3":
-            if rerrolagens < 2:
-                dados_rolados = rolar_dados(len(dados_rolados))
-                rerrolagens += 1
-            else:
-                print("Você já usou todas as rerrolagens.")
 
-        elif opcao == "4":
-            imprime_cartela(cartela)
+def mostrar_dados_da_rodada(dados_atuais, dados_guardados):
+    print(f"Dados rolados: {dados_atuais}")
+    print(f"Dados guardados: {dados_guardados}")
 
-        elif opcao == "0":
-            print("Digite a combinação desejada:")
 
-            combinacao_valida = False
+def calcular_total(cartela):
+    total_simples = 0
+    for valor in cartela["regra_simples"].values():
+        if valor != -1:
+            total_simples = total_simples + valor
 
-            while not combinacao_valida:
-                categoria = input()
+    total_avancado = 0
+    for valor in cartela["regra_avancada"].values():
+        if valor != -1:
+            total_avancado = total_avancado + valor
 
-                if categoria in ["1", "2", "3", "4", "5", "6"]:
-                    categoria_int = int(categoria)
+    bonus = 0
+    if total_simples >= 63:
+        bonus = 35
 
-                    if cartela["regra_simples"][categoria_int] != -1:
-                        print("Essa combinação já foi utilizada.")
-                    else:
-                        dados = dados_rolados + dados_guardados
-                        cartela = faz_jogada(dados, categoria, cartela)
-                        combinacao_valida = True
-                        marcou = True
+    return total_simples + total_avancado + bonus
 
-                elif categoria in cartela["regra_avancada"]:
-                    if cartela["regra_avancada"][categoria] != -1:
-                        print("Essa combinação já foi utilizada.")
-                    else:
-                        dados = dados_rolados + dados_guardados
-                        cartela = faz_jogada(dados, categoria, cartela)
-                        combinacao_valida = True
-                        marcou = True
 
+def jogo():
+    cartela = criar_cartela_vazia()
+    imprime_cartela(cartela)
+
+    for rodada in range(12):
+        dados_atuais = rolar_dados(5)
+        dados_guardados = []
+        vezes_rerroladas = 0
+        terminou_rodada = False
+        mostrar_menu = True
+
+        while terminou_rodada == False:
+            if mostrar_menu:
+                mostrar_dados_da_rodada(dados_atuais, dados_guardados)
+                print("Digite 1 para guardar um dado, 2 para remover um dado, 3 para rerrolar, 4 para ver a cartela ou 0 para marcar a pontuação:")
+
+            mostrar_menu = True
+            opcao = input()
+
+            if opcao == "1":
+                print("Digite o índice do dado a ser guardado (0 a 4):")
+                indice = input()
+
+                if eh_numero_valido(indice):
+                    indice = int(indice)
+                    if indice >= 0 and indice < len(dados_atuais):
+                        resultado = guardar_dado(dados_atuais, dados_guardados, indice)
+                        dados_atuais = resultado[0]
+                        dados_guardados = resultado[1]
+
+            elif opcao == "2":
+                print("Digite o índice do dado a ser removido (0 a 4):")
+                indice = input()
+
+                if eh_numero_valido(indice):
+                    indice = int(indice)
+                    if indice >= 0 and indice < len(dados_guardados):
+                        resultado = remover_dado(dados_atuais, dados_guardados, indice)
+                        dados_atuais = resultado[0]
+                        dados_guardados = resultado[1]
+
+            elif opcao == "3":
+                if vezes_rerroladas >= 2:
+                    print("Você já usou todas as rerrolagens.")
                 else:
-                    print("Combinação inválida. Tente novamente.")
+                    quantidade = 5 - len(dados_guardados)
+                    dados_atuais = rolar_dados(quantidade)
+                    vezes_rerroladas = vezes_rerroladas + 1
 
-        else:
-            print("Opção inválida. Tente novamente.")
+            elif opcao == "4":
+                imprime_cartela(cartela)
 
-    rodada += 1
+            elif opcao == "0":
+                todos_os_dados = dados_atuais + dados_guardados
+                print("Digite a combinação desejada:")
 
-pontuacao = 0
+                escolha_certa = False
+                while escolha_certa == False:
+                    escolha = input()
 
-soma_simples = 0
-for valor in cartela["regra_simples"].values():
-    soma_simples += valor
-    pontuacao += valor
+                    if combinacao_existe_na_cartela(cartela) == False:
+                        print("Combinação inválida. Tente novamente.")
+                    elif combinacao_foi_usada(cartela, escolha):
+                        print("Essa combinação já foi utilizada.")
+                    else:
+                        cartela = faz_jogada(todos_os_dados, escolha, cartela)
+                        escolha_certa = True
+                        terminou_rodada = True
 
-for valor in cartela["regra_avancada"].values():
-    pontuacao += valor
+            else:
+                print("Opção inválida. Tente novamente.")
+                mostrar_menu = False
 
-if soma_simples >= 63:
-    pontuacao += 35
+    imprime_cartela(cartela)
+    pontos = calcular_total(cartela)
+    print(f"Pontuação total: {pontos}")
 
-imprime_cartela(cartela)
-print(f"Pontuação total: {pontuacao}")
+
+jogo()
